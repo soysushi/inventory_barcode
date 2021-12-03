@@ -103,6 +103,8 @@ class ProductForm(forms.ModelForm):
     # dynamic variants
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
         variants = ProductVariant.objects.filter(
             product=self.instance
         )
@@ -111,11 +113,12 @@ class ProductForm(forms.ModelForm):
             self.fields[field_name] = forms.CharField(required=False)
             try:
                 self.initial[field_name] = variants[i].variant
+
             except IndexError:
                 self.initial[field_name] = ""
         # create an extra blank field
-        field_name = 'variant_%s' % (i + 1,)
-        self.fields[field_name] = forms.CharField(required=False)
+        #field_name = 'variant_%s' % (i + 1,)
+        #self.fields[field_name] = forms.CharField(required=False)
 
     def clean(self):
         variants = set()
@@ -123,6 +126,8 @@ class ProductForm(forms.ModelForm):
         field_name = 'variant_%s' % (i,)
         while self.cleaned_data.get(field_name):
            variant = self.cleaned_data[field_name]
+           print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+           print(variant)
            if variant in variants:
                self.add_error(field_name, 'Duplicate')
            else:
@@ -141,6 +146,8 @@ class ProductForm(forms.ModelForm):
 
         #product.variant_set.all().delete()
         for variant in self.cleaned_data["variants"]:
+           print("***********************************")
+           print(variant)
            ProductVariant.objects.create(
                product=product,
                variant=variant,

@@ -44,10 +44,10 @@ jQuery(document).ready(function($) {
 		});
 	});
 
-	var count = 2
+	var count = 1
 	// Variant Trigger
 	$('#variant-button').on('click', function() {
-	    let $this = $("#id_variant_1")
+	    let $this = $("#id_variant_0")
 	    let $clone = $this.clone()
 			let name = $clone.attr('name')
 		  let n = count
@@ -58,9 +58,7 @@ jQuery(document).ready(function($) {
 			let new_id = "id_" + name
 			$clone.attr('id', new_id)
 			$clone.appendTo($this.parent())
-			$this.removeClass('variant-list-new')
-			$this.off('input', arguments.callee)
-			$clone.on('input', arguments.callee)
+			$this.addClass('form-control')
 			})
 
 	// Menu Trigger
