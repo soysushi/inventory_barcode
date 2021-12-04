@@ -143,7 +143,7 @@ class ProductForm(forms.ModelForm):
         product = self.instance
         product.name = self.cleaned_data['name']
         product.save()
-
+        #test
         #product.variant_set.all().delete()
         for variant in self.cleaned_data["variants"]:
            print("***********************************")
