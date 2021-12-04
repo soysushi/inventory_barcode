@@ -110,7 +110,7 @@ class ProductForm(forms.ModelForm):
         )
         for i in range(len(variants) + 1):
             field_name = 'variant_%s' % (i,)
-            self.fields[field_name] = forms.CharField(required=False)
+            self.fields[field_name] = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control',}))
             try:
                 self.initial[field_name] = variants[i].variant
 
