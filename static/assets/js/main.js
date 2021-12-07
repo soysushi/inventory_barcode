@@ -59,7 +59,9 @@ jQuery(document).ready(function($) {
 			$clone.attr('id', new_id)
 			$clone.appendTo($this.parent())
 			$this.addClass('form-control')
+			// add variant value(s)
 			})
+
 
 	// Menu Trigger
 	$('#menuToggle').on('click', function(event) {

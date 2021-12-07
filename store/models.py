@@ -57,6 +57,13 @@ class ProductVariant(models.Model):
     def __str__(self):
         return self.variant
 
+class VariantOption(models.Model):
+    variant = models.ForeignKey(ProductVariant, on_delete=models.CASCADE)
+    variant_option = models.CharField(max_length=123, unique=False)
+
+    def __str__(self):
+        return self.variant_option
+
 class Order(models.Model):
     STATUS_CHOICE = (
         ('pending', 'Pending'),

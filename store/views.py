@@ -4,6 +4,7 @@ import uuid
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from users.models import User
 from .models import (
@@ -13,7 +14,8 @@ from .models import (
     Drop,
     Product,
     Order,
-    Delivery
+    Delivery,
+    ProductVariant
 )
 from .forms import (
     SupplierForm,
@@ -137,8 +139,23 @@ def create_product(request):
     forms = ProductForm()
     if request.method == 'POST':
         forms = ProductForm(request.POST)
+        # get product and product variant
         if forms.is_valid():
             forms.save()
+            # get the response_objects
+            response_objects = request.POST
+            # get product instance
+            product = Product.objects.get(
+                name = request.POST['name']
+            )
+            # get variants in POST request
+            names = [v for k, v in request.POST.items() if k.startswith('variant_')]
+            
+            for name in names:
+                ProductVariant.objects.create(
+                    product=product,
+                    variant=name,
+                )
             return redirect('product-list')
     context = {
         'form': forms

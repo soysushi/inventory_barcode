@@ -66,9 +66,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="variants" class="control-label mb-1">Variants</label>
-                            {% for variant_field in form.get_variant_fields %}
-                                {{ variant_field }}
-                            {% endfor %}
+                                {{ form.variant_0 }}
+                                <!--{% for variant_option_name in form.get_variant_fields %}
+                                    {{ variant_option_name.label }}<br>
+                                    {{ variant_option_name }}
+                                {% endfor %}-->
+
                             </div>
                             <button id="variant-button" type="button" class="btn btn-sm">
                                 <span id="payment-button-amount">New Variant</span>

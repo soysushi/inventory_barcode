@@ -100,7 +100,7 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = "__all__"
     name = forms.CharField(required=False)
-    # dynamic variants
+    # initialize the form
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for visible in self.visible_fields():
@@ -116,18 +116,23 @@ class ProductForm(forms.ModelForm):
 
             except IndexError:
                 self.initial[field_name] = ""
-        # create an extra blank field
-        #field_name = 'variant_%s' % (i + 1,)
-        #self.fields[field_name] = forms.CharField(required=False)
+         # create the variant_option
+        #variant_option_name = 'option_%s_variant_%s' % (i, i)
+        #self.fields[variant_option_name] = forms.CharField(required=False, label="Variant value")
 
+    #def get_variant_fields(self):
+        #for variant_option_name in self.fields:
+            #if variant_option_name.startswith('option_'):
+                #yield self[variant_option_name]
+
+    # filtering user input data
     def clean(self):
+        # for some reason self
         variants = set()
         i = 0
         field_name = 'variant_%s' % (i,)
         while self.cleaned_data.get(field_name):
            variant = self.cleaned_data[field_name]
-           print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
-           print(variant)
            if variant in variants:
                self.add_error(field_name, 'Duplicate')
            else:
@@ -135,23 +140,14 @@ class ProductForm(forms.ModelForm):
            i += 1
            field_name = 'variant_%s' % (i,)
         self.cleaned_data["variants"] = variants
-    def get_variant_fields(self):
-        for field_name in self.fields:
-            if field_name.startswith('variant_'):
-                yield self[field_name]
+
     def save(self):
         product = self.instance
         product.name = self.cleaned_data['name']
         product.save()
-        #test
+
         #product.variant_set.all().delete()
-        for variant in self.cleaned_data["variants"]:
-           print("***********************************")
-           print(variant)
-           ProductVariant.objects.create(
-               product=product,
-               variant=variant,
-           )
+
 
 
 class OrderForm(forms.ModelForm):
