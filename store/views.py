@@ -10,7 +10,7 @@ from users.models import User
 from .models import (
     Supplier,
     Buyer,
-    Season,
+    Office,
     Drop,
     Product,
     Order,
@@ -20,7 +20,7 @@ from .models import (
 from .forms import (
     SupplierForm,
     BuyerForm,
-    SeasonForm,
+    OfficeForm,
     DropForm,
     ProductForm,
     OrderForm,
@@ -91,25 +91,25 @@ class BuyerListView(ListView):
     context_object_name = 'buyer'
 
 
-# Season views
+# Office views
 @login_required(login_url='login')
-def create_season(request):
-    forms = SeasonForm()
+def create_office(request):
+    forms = OfficeForm()
     if request.method == 'POST':
-        forms = SeasonForm(request.POST)
+        forms = OfficeForm(request.POST)
         if forms.is_valid():
             forms.save()
-            return redirect('season-list')
+            return redirect('office-list')
     context = {
         'form': forms
     }
-    return render(request, 'store/create_season.html', context)
+    return render(request, 'store/create_office.html', context)
 
 
-class SeasonListView(ListView):
-    model = Season
-    template_name = 'store/season_list.html'
-    context_object_name = 'season'
+class OfficeListView(ListView):
+    model = Office
+    template_name = 'store/office_list.html'
+    context_object_name = 'office'
 
 
 # Drop views
@@ -150,7 +150,7 @@ def create_product(request):
             )
             # get variants in POST request
             names = [v for k, v in request.POST.items() if k.startswith('variant_')]
-            
+
             for name in names:
                 ProductVariant.objects.create(
                     product=product,
@@ -181,7 +181,7 @@ def create_order(request):
             design = forms.cleaned_data['design']
             color = forms.cleaned_data['color']
             buyer = forms.cleaned_data['buyer']
-            season = forms.cleaned_data['season']
+            office = forms.cleaned_data['office']
             drop = forms.cleaned_data['drop']
             Order.objects.create(
                 supplier=supplier,
@@ -189,7 +189,7 @@ def create_order(request):
                 design=design,
                 color=color,
                 buyer=buyer,
-                season=season,
+                office=office,
                 drop=drop,
                 status='pending'
             )

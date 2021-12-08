@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Season, Drop, Product, Order, Delivery, ProductVariant
+from .models import Office, Drop, Product, Order, Delivery, ProductVariant
 
 
 class SupplierForm(forms.Form):
@@ -69,9 +69,9 @@ class BuyerForm(forms.Form):
     }))
 
 
-class SeasonForm(forms.ModelForm):
+class OfficeForm(forms.ModelForm):
     class Meta:
-        model = Season
+        model = Office
         fields = ['name', 'description']
 
         widgets = {
@@ -154,7 +154,7 @@ class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = [
-            'supplier', 'product', 'design', 'color', 'buyer', 'season', 'drop'
+            'supplier', 'product', 'design', 'color', 'buyer', 'office', 'drop'
         ]
 
         widgets = {
@@ -173,8 +173,8 @@ class OrderForm(forms.ModelForm):
             'buyer': forms.Select(attrs={
                 'class': 'form-control', 'id': 'buyer'
             }),
-            'season': forms.Select(attrs={
-                'class': 'form-control', 'id': 'season'
+            'office': forms.Select(attrs={
+                'class': 'form-control', 'id': 'office'
             }),
             'drop': forms.Select(attrs={
                 'class': 'form-control', 'id': 'drop'

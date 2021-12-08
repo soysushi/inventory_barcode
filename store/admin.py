@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import (
     Supplier,
     Buyer,
-    Season,
+    Office,
     Drop,
     Product,
     Order,
@@ -23,7 +23,7 @@ class BuyerAdmin(admin.ModelAdmin):
 
 admin.site.register(Supplier, SupplierAdmin)
 admin.site.register(Buyer, BuyerAdmin)
-admin.site.register(Season)
+admin.site.register(Office)
 admin.site.register(Drop)
 admin.site.register(Product)
 admin.site.register(Order)

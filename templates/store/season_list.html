@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 
-{% block title %}Season List{% endblock title %}
+{% block title %}Office List{% endblock title %}
 
 {% block breadcrumbs %}
 <div class="breadcrumbs">
@@ -18,7 +18,7 @@
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Dashboard</a></li>
-                            <li><a href="#">Season</a></li>
+                            <li><a href="#">Office</a></li>
                             <li class="active">List</li>
                         </ol>
                     </div>
@@ -34,7 +34,7 @@
     <div class="col-xl-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="box-title">Season List </h4>
+                <h4 class="box-title">Office List </h4>
             </div>
             <div class="card-body--">
                 <div class="table-stats order-table ov-h">
@@ -48,17 +48,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% if season %}
-                            {% for season in season %}
+                            {% if office %}
+                            {% for office in office %}
                             <tr>
                                 <td class="serial">{{ forloop.counter }}</td>
-                                <td>{{ season.name }}</td>
-                                <td>{{ season.description }}</td>
-                                <td>{{ season.created_date }}</td>
+                                <td>{{ office.name }}</td>
+                                <td>{{ office.description }}</td>
+                                <td>{{ office.created_date }}</td>
                             </tr>
                             {% endfor %}
                             {% else %}
-                                <tr><td>No Season Data</td></tr>
+                                <tr><td>No Office Data</td></tr>
                             {% endif %}
                         </tbody>
                     </table>
