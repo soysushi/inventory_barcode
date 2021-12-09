@@ -42,7 +42,8 @@ class Drop(models.Model):
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=120, unique=True, default=None)
+    sport = models.CharField(max_length=120, unique=False, default=None)
+    name = models.CharField(max_length=120, unique=False, default=None)
     sortno = models.PositiveIntegerField()
     created_date = models.DateField(auto_now_add=True)
     label = models.ImageField(upload_to='static/images/barcodes', blank=True, default=None)
@@ -63,6 +64,16 @@ class VariantOption(models.Model):
 
     def __str__(self):
         return self.variant_option
+
+class ProductNumber(models.Model):
+    name = models.CharField(max_length=120, unique=True, default=None)
+    number = models.PositiveIntegerField()
+
+    def __str__(self):
+        return self.name
+
+
+
 
 class Order(models.Model):
     STATUS_CHOICE = (

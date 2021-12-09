@@ -6,6 +6,8 @@ from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+from barcode import EAN13
+
 from users.models import User
 from .models import (
     Supplier,
@@ -15,7 +17,8 @@ from .models import (
     Product,
     Order,
     Delivery,
-    ProductVariant
+    ProductVariant,
+    ProductNumber
 )
 from .forms import (
     SupplierForm,
@@ -27,6 +30,9 @@ from .forms import (
     DeliveryForm
 )
 
+from .helpers import (
+    generate_label
+)
 
 # Supplier views
 @login_required(login_url='login')
@@ -137,6 +143,7 @@ class DropListView(ListView):
 @login_required(login_url='login')
 def create_product(request):
     forms = ProductForm()
+
     if request.method == 'POST':
         forms = ProductForm(request.POST)
         # get product and product variant
@@ -146,8 +153,18 @@ def create_product(request):
             response_objects = request.POST
             # get product instance
             product = Product.objects.get(
-                name = request.POST['name']
+                sortno = request.POST['sortno']
             )
+            # get the current barcode
+            barcode = ProductNumber.objects.get(name="barcode")
+            product.sortno = barcode.number
+            photo = generate_label(barcode.number)
+            print("ARE YOU WITH ME")
+            print(type(photo))
+            barcode.number += 10
+            barcode.save()
+
+
             # get variants in POST request
             names = [v for k, v in request.POST.items() if k.startswith('variant_')]
 
@@ -157,6 +174,12 @@ def create_product(request):
                     variant=name,
                 )
             return redirect('product-list')
+    # get the current barcodes
+    barcode = ProductNumber.objects.get(name="barcode")
+    sortno = int(str(EAN13(str(barcode.number))))
+    forms.fields['sortno'].initial = sortno
+
+
     context = {
         'form': forms
     }

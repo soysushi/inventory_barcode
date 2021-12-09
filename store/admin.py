@@ -9,7 +9,8 @@ from .models import (
     Order,
     Delivery,
     ProductVariant,
-    VariantOption
+    VariantOption,
+    ProductNumber,
 )
 
 
@@ -30,3 +31,4 @@ admin.site.register(Order)
 admin.site.register(Delivery)
 admin.site.register(ProductVariant)
 admin.site.register(VariantOption)
+admin.site.register(ProductNumber)

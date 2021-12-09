@@ -99,7 +99,9 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = "__all__"
-    name = forms.CharField(required=False)
+    sport = forms.CharField(required=False)
+    name = forms.CharField(required=True)
+
     # initialize the form
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -144,6 +146,7 @@ class ProductForm(forms.ModelForm):
     def save(self):
         product = self.instance
         product.name = self.cleaned_data['name']
+        product.sortno = self.cleaned_data['sortno']
         product.save()
 
         #product.variant_set.all().delete()
