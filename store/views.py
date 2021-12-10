@@ -155,6 +155,14 @@ def create_product(request):
             product = Product.objects.get(
                 sortno = request.POST['sortno']
             )
+            # get product variants
+            names = [v for k, v in request.POST.items() if k.startswith('variant_')]
+
+            for name in names:
+                ProductVariant.objects.create(
+                    product=product,
+                    variant=name,
+                )
             # get the current barcode
             barcode = ProductNumber.objects.get(name="barcode")
             product.sortno = barcode.number
@@ -164,13 +172,7 @@ def create_product(request):
 
 
             # get variants in POST request
-            names = [v for k, v in request.POST.items() if k.startswith('variant_')]
 
-            for name in names:
-                ProductVariant.objects.create(
-                    product=product,
-                    variant=name,
-                )
             return redirect('product-list')
     # get the current barcodes
     barcode = ProductNumber.objects.get(name="barcode")

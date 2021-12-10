@@ -40,7 +40,10 @@ def generate_label(barcode, product):
     back_im_io = BytesIO()
     back_im.save(back_im_io, format='PNG')
     back_im_name = str(barcode)+'.png'
-
+    # adding Product information onto the label
+    font = ImageFont.truetype(font='static/assets/fonts/Zachery.otf', size=12)
+    print(font)
+    print("HELLO FROM INSIDE")
     product.label.save(back_im_name, content=ContentFile(back_im_io.getvalue()), save=False)
 
     product.save()
