@@ -42,8 +42,11 @@ def generate_label(barcode, product):
     back_im_name = str(barcode)+'.png'
     # adding Product information onto the label
     font = ImageFont.truetype(font='static/assets/fonts/Zachery.otf', size=12)
-    print(font)
-    print("HELLO FROM INSIDE")
+    draw = ImageDraw.Draw(im=back_im)
+    text = product.name
+    draw.text(xy=(0,0), text=text, font=font, fill='#000000')
+    back_im.show()
+    # saving the image to the model
     product.label.save(back_im_name, content=ContentFile(back_im_io.getvalue()), save=False)
 
     product.save()
