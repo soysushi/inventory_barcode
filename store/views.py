@@ -158,9 +158,7 @@ def create_product(request):
             # get the current barcode
             barcode = ProductNumber.objects.get(name="barcode")
             product.sortno = barcode.number
-            photo = generate_label(barcode.number)
-            print("ARE YOU WITH ME")
-            print(type(photo))
+            generate_label(barcode.number, product)
             barcode.number += 10
             barcode.save()
 
