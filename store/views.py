@@ -166,7 +166,7 @@ def create_product(request):
             # get the current barcode
             barcode = ProductNumber.objects.get(name="barcode")
             product.sortno = barcode.number
-            generate_label(barcode.number, product)
+            generate_label(barcode.number, product, names)
             barcode.number += 10
             barcode.save()
 
