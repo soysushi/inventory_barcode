@@ -14,8 +14,9 @@ import json
 from fitz import Rect
 from django.core.files.base import ContentFile
 
-def generate_label(barcode, product, names, link):
+def generate_label(barcode, product, names):
     # create a png file
+
 # file that has all the item variants
     original_image = EAN13(str(barcode), writer=ImageWriter())
     i = original_image.render()
@@ -26,8 +27,8 @@ def generate_label(barcode, product, names, link):
     image = i.resize((width_size * 2, fixed_height),
             PIL.Image.NEAREST)
     # here turning PILLOW IMG file into BytesIO
-    #image_io = BytesIO()
-    #image.save(image_io, format='PNG')
+    image_io = BytesIO()
+    image.save(image_io, format='PNG')
     image_name = str(barcode)+'.png'
     # preparing barcode to paste to template
     img_main = Image.open('static/images/Cycling_Template.png')
@@ -55,7 +56,6 @@ def generate_label(barcode, product, names, link):
     draw = ImageDraw.Draw(im=back_im)
     text = product.name
     draw.text(xy=(36,201), text=text, font=n_font, fill='#000000')
-
     # adding the first 4 Product Variants onto the label
     variants = names[:5]
     spacing = 255
@@ -70,20 +70,16 @@ def generate_label(barcode, product, names, link):
         box_size=5,
         border=0,
     )
-    qr.add_data(link)
+    qr.add_data('https://www.champ-sys.ca/collections/cycling-jackets/products/custom-windguard-jacket')
     qr.make(fit=True)
-    s_font = ImageFont.truetype(font='static/assets/fonts/Zachery.otf', size=32)
-    draw.text(xy=(40,523), text="scan QR code for more info!", font=s_font, fill='#000000')
+
     qr_test = qr.make_image(fill_color="black", back_color="white")
     qr_test.show()
-    back_im.paste(qr_test,(488, 349))
+    back_im.paste(qr_test,(488, 389))
     back_im.show()
-    back_im_io = BytesIO()
-    back_im.save(back_im_io, format='PNG')
     # saving the image to the model
     product.label.save(back_im_name, content=ContentFile(back_im_io.getvalue()), save=False)
-    product.save()
-    return
 
-def print_label(items):
+    product.save()
+
     return

@@ -37,18 +37,13 @@
                 <h4 class="box-title">Product List </h4>
             </div>
             <div class="card-body--">
-              <form action={% url 'product-list' %} method="POST" novalidate="novalidate">
-              {% csrf_token %}
                 <div class="table-stats order-table ov-h">
                     <table class="table ">
-
                         <thead>
                             <tr>
-                                <th>Print</th>
                                 <th class="serial">#</th>
                                 <th>Name</th>
                                 <th>Sort No</th>
-                                <th>Variants</th>
                                 <th>Date</th>
                             </tr>
                         </thead>
@@ -56,42 +51,22 @@
                             {% if product %}
                             {% for product in product %}
                             <tr>
-                                <td><input type="checkbox" name="product" value="{{ product.sortno }}" /></td>
                                 <td class="serial">{{ forloop.counter }}</td>
-
                                 <td>{{ product.name }}</td>
                                 <td>{{ product.sortno }}</td>
-                                <td>
-                                {%for variant in product.productvariant_set.all %}
-                                {{ variant }}
-                                {% endfor %}
-                                </td>
                                 <td>{{ product.created_date }}</td>
                             </tr>
                             {% endfor %}
-
-
-
-
                             {% else %}
                                 <tr><td>No Product Data</td></tr>
                             {% endif %}
-
-
                         </tbody>
-
                     </table>
                 </div> <!-- /.table-stats -->
-                <tr></tr>
-                <button id="variant-button" type="submit" class="btn btn-lg btn-info btn-block">
-                    <span id="payment-button-amount">Print Labels</span>
-                </button>
-              </form>
             </div>
         </div> <!-- /.card -->
-
     </div>  <!-- /.col-lg-8 -->
 
-
+    
 </div>
 {% endblock content %}
