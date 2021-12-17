@@ -31,7 +31,8 @@ from .forms import (
 )
 
 from .helpers import (
-    generate_label
+    generate_label,
+    print_label
 )
 
 # Supplier views
@@ -194,8 +195,11 @@ def create_product(request):
 @login_required(login_url='login')
 def product_list(request):
     if request.method == 'POST':
-        items = request.POST.getlist("product")
-        print(items)
+        barcodes = request.POST.getlist("product")
+        items = []
+        for barcode in barcodes:
+            items = Product.objects.filter(sortno=barcode)
+        print_label(items)
     products = Product.objects.all()
     for product in products:
          variants = product.productvariant_set.all()
