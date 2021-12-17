@@ -65,7 +65,7 @@ def generate_label(barcode, product, names, link):
         spacing += 45
     # generating QR CODE
     qr = qrcode.QRCode(
-        version=1,
+        version=None,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
         box_size=5,
         border=0,
@@ -86,62 +86,4 @@ def generate_label(barcode, product, names, link):
     return
 
 def print_label(items):
-    x = 0
-    counter = 0
-    for item in items:
-        input_file = 'static/images/AveryPresta94104SquareLabels.pdf'
-        label_limit = 9
-        # setting unique file name
-        file_name = 'product_labels'
-        # open up tag
-        # retrieve the first page of the PDF
-        file_handle = fitz.open(input_file)
-        first_page = file_handle[0]
-        # add the image
-        # first image location 1
-        if counter == 0:
-            tag_file = str(item.label)
-            print("HELLLOOOOOOO")
-            print(tag_file)
-            image_rectangle = Rect(27,72,206,251)
-            first_page.insertImage(image_rectangle, filename=tag_file)
-            output_file = str(file_name + str(x) + '.pdf')
-            file_handle.save(output_file)
-
-        # second+ image locations
-        if counter != 0 and counter < 9:
-            tag_file = str(item.label)
-            input_file = str(file_name + str(x) + '.pdf')
-            file_handle = fitz.open(input_file)
-            first_page = file_handle[0]
-            if counter == 1:
-                image_rectangle = Rect(215,72,395,251)
-            if counter == 2:
-                image_rectangle = Rect(405,72,585,251)
-            if counter == 3:
-                image_rectangle = Rect(27,306,206,485)
-            if counter == 4:
-                image_rectangle = Rect(215,306,395,485)
-            if counter == 5:
-                image_rectangle = Rect(405,306,585,485)
-            if counter == 6:
-                image_rectangle = Rect(27,540,206,720)
-            if counter == 7:
-                image_rectangle = Rect(215,540,395,720)
-            if counter == 8:
-                image_rectangle = Rect(405,540,585,720)
-            first_page.insertImage(image_rectangle, filename=tag_file)
-            output_file = str(file_name + str(x) + '.pdf')
-            file_handle.saveIncr()
-
-        # third image location 3
-        if counter == 9:
-            x += 1
-            counter = 0
-            tag_file = str(item.label)
-            image_rectangle = Rect(27,72,206,251)
-            first_page.insertImage(image_rectangle, filename=tag_file)
-            output_file = str(file_name + str(x) + '.pdf')
-            file_handle.save(output_file)
-
-        counter += 1
+    return

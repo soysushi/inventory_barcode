@@ -62,15 +62,6 @@ jQuery(document).ready(function($) {
 			// add variant value(s)
 			})
 
-	// prevent form submission if no checkbox
-	$('#print-form').submit(function() {
-      if ($('.check-box-product').is(':checked')){
-          // everything's fine...
-      } else {
-          alert('Nothing is selected');
-          return false;
-      }
-  });
 
 	// Menu Trigger
 	$('#menuToggle').on('click', function(event) {
