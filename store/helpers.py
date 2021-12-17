@@ -79,7 +79,14 @@ def generate_label(barcode, product, names):
     back_im.show()
     # saving the image to the model
     product.label.save(back_im_name, content=ContentFile(back_im_io.getvalue()), save=False)
+<<<<<<< HEAD
 
     product.save()
 
+=======
+    product.save()
+    return
+
+def print_label(items):
+>>>>>>> parent of ea89d2d (label-some-bugs)
     return

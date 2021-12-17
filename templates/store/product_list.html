@@ -37,6 +37,11 @@
                 <h4 class="box-title">Product List </h4>
             </div>
             <div class="card-body--">
+<<<<<<< HEAD
+=======
+              <form action={% url 'product-list' %} method="POST" novalidate="novalidate">
+              {% csrf_token %}
+>>>>>>> parent of ea89d2d (label-some-bugs)
                 <div class="table-stats order-table ov-h">
                     <table class="table ">
                         <thead>
@@ -51,18 +56,37 @@
                             {% if product %}
                             {% for product in product %}
                             <tr>
+<<<<<<< HEAD
+=======
+                                <td><input type="checkbox" name="product" value="{{ product.sortno }}" /></td>
+>>>>>>> parent of ea89d2d (label-some-bugs)
                                 <td class="serial">{{ forloop.counter }}</td>
                                 <td>{{ product.name }}</td>
                                 <td>{{ product.sortno }}</td>
                                 <td>{{ product.created_date }}</td>
                             </tr>
                             {% endfor %}
+
+
+
+
                             {% else %}
                                 <tr><td>No Product Data</td></tr>
                             {% endif %}
+
+
                         </tbody>
+
                     </table>
                 </div> <!-- /.table-stats -->
+<<<<<<< HEAD
+=======
+                <tr></tr>
+                <button id="variant-button" type="submit" class="btn btn-lg btn-info btn-block">
+                    <span id="payment-button-amount">Print Labels</span>
+                </button>
+              </form>
+>>>>>>> parent of ea89d2d (label-some-bugs)
             </div>
         </div> <!-- /.card -->
     </div>  <!-- /.col-lg-8 -->

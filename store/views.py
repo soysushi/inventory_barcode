@@ -186,10 +186,30 @@ def create_product(request):
     return render(request, 'store/create_product.html', context)
 
 
+<<<<<<< HEAD
 class ProductListView(ListView):
     model = Product
     template_name = 'store/product_list.html'
     context_object_name = 'product'
+=======
+#class ProductListView(ListView):
+#    model = Product
+#    template_name = 'store/product_list.html'
+#    context_object_name = 'product'
+@login_required(login_url='login')
+def product_list(request):
+    if request.method == 'POST':
+        items = request.POST.getlist("product")
+        print(items)
+    products = Product.objects.all()
+    for product in products:
+         variants = product.productvariant_set.all()
+    context = {
+        'product': products,
+        'variants': variants,
+    }
+    return render(request, 'store/product_list.html', context)
+>>>>>>> parent of ea89d2d (label-some-bugs)
 
 
 # Order views
