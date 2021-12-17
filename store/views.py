@@ -27,11 +27,12 @@ from .forms import (
     DropForm,
     ProductForm,
     OrderForm,
-    DeliveryForm
+    DeliveryForm,
 )
 
 from .helpers import (
-    generate_label
+    generate_label,
+    print_label
 )
 
 # Supplier views
@@ -166,7 +167,8 @@ def create_product(request):
             # get the current barcode
             barcode = ProductNumber.objects.get(name="barcode")
             product.sortno = barcode.number
-            generate_label(barcode.number, product, names)
+            link = request.POST['link']
+            generate_label(barcode.number, product, names, link)
             barcode.number += 10
             barcode.save()
 
@@ -186,10 +188,6 @@ def create_product(request):
     return render(request, 'store/create_product.html', context)
 
 
-class ProductListView(ListView):
-    model = Product
-    template_name = 'store/product_list.html'
-    context_object_name = 'product'
 #class ProductListView(ListView):
 #    model = Product
 #    template_name = 'store/product_list.html'
@@ -197,8 +195,11 @@ class ProductListView(ListView):
 @login_required(login_url='login')
 def product_list(request):
     if request.method == 'POST':
-        items = request.POST.getlist("product")
-        print(items)
+        barcodes = request.POST.getlist("product")
+        items = []
+        for barcode in barcodes:
+            items = Product.objects.filter(sortno=barcode)
+        print_label(items)
     products = Product.objects.all()
     for product in products:
          variants = product.productvariant_set.all()
@@ -207,7 +208,6 @@ def product_list(request):
         'variants': variants,
     }
     return render(request, 'store/product_list.html', context)
->>>>>>> parent of ea89d2d (label-some-bugs)
 
 
 # Order views
