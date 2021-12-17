@@ -27,7 +27,7 @@ from .forms import (
     DropForm,
     ProductForm,
     OrderForm,
-    DeliveryForm,
+    DeliveryForm
 )
 
 from .helpers import (
@@ -166,8 +166,7 @@ def create_product(request):
             # get the current barcode
             barcode = ProductNumber.objects.get(name="barcode")
             product.sortno = barcode.number
-            link = request.POST['link']
-            generate_label(barcode.number, product, names, link)
+            generate_label(barcode.number, product, names)
             barcode.number += 10
             barcode.save()
 
@@ -187,23 +186,10 @@ def create_product(request):
     return render(request, 'store/create_product.html', context)
 
 
-#class ProductListView(ListView):
-#    model = Product
-#    template_name = 'store/product_list.html'
-#    context_object_name = 'product'
-@login_required(login_url='login')
-def product_list(request):
-    if request.method == 'POST':
-        items = request.POST.getlist("product")
-        print(items)
-    products = Product.objects.all()
-    for product in products:
-         variants = product.productvariant_set.all()
-    context = {
-        'product': products,
-        'variants': variants,
-    }
-    return render(request, 'store/product_list.html', context)
+class ProductListView(ListView):
+    model = Product
+    template_name = 'store/product_list.html'
+    context_object_name = 'product'
 
 
 # Order views
