@@ -88,5 +88,8 @@ def generate_label(barcode, product, names):
     return
 
 def print_label(items):
+<<<<<<< HEAD
+>>>>>>> parent of ea89d2d (label-some-bugs)
+=======
 >>>>>>> parent of ea89d2d (label-some-bugs)
     return
