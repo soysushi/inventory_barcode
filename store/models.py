@@ -44,6 +44,7 @@ class Drop(models.Model):
 class Product(models.Model):
     sport = models.CharField(max_length=120, unique=False, default=None)
     name = models.CharField(max_length=120, unique=False, default=None)
+    link = models.CharField(max_length=120, unique=False, default=None)
     sortno = models.PositiveIntegerField()
     created_date = models.DateField(auto_now_add=True)
     label = models.ImageField(upload_to='static/images/barcodes', blank=True, default=None)
