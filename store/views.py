@@ -186,12 +186,10 @@ def create_product(request):
     return render(request, 'store/create_product.html', context)
 
 
-<<<<<<< HEAD
 class ProductListView(ListView):
     model = Product
     template_name = 'store/product_list.html'
     context_object_name = 'product'
-=======
 #class ProductListView(ListView):
 #    model = Product
 #    template_name = 'store/product_list.html'
