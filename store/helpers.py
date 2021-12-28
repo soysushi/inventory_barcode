@@ -14,6 +14,9 @@ import json
 from fitz import Rect
 from django.core.files.base import ContentFile
 
+from .models import Product
+
+
 def generate_label(barcode, product, names, link):
     # create a png file
 # file that has all the item variants
@@ -75,9 +78,7 @@ def generate_label(barcode, product, names, link):
     s_font = ImageFont.truetype(font='static/assets/fonts/Zachery.otf', size=32)
     draw.text(xy=(40,523), text="scan QR code for more info!", font=s_font, fill='#000000')
     qr_test = qr.make_image(fill_color="black", back_color="white")
-    qr_test.show()
     back_im.paste(qr_test,(488, 349))
-    back_im.show()
     back_im_io = BytesIO()
     back_im.save(back_im_io, format='PNG')
     # saving the image to the model
@@ -88,7 +89,10 @@ def generate_label(barcode, product, names, link):
 def print_label(items):
     x = 0
     counter = 0
+    # use the barcode to get the products
+
     for item in items:
+        product = Product.objects.get(sortno=item)
         input_file = 'static/images/AveryPresta94104SquareLabels.pdf'
         label_limit = 9
         # setting unique file name
@@ -100,9 +104,7 @@ def print_label(items):
         # add the image
         # first image location 1
         if counter == 0:
-            tag_file = str(item.label)
-            print("HELLLOOOOOOO")
-            print(tag_file)
+            tag_file = str(product.label)
             image_rectangle = Rect(27,72,206,251)
             first_page.insertImage(image_rectangle, filename=tag_file)
             output_file = str(file_name + str(x) + '.pdf')
@@ -110,7 +112,7 @@ def print_label(items):
 
         # second+ image locations
         if counter != 0 and counter < 9:
-            tag_file = str(item.label)
+            tag_file = str(product.label)
             input_file = str(file_name + str(x) + '.pdf')
             file_handle = fitz.open(input_file)
             first_page = file_handle[0]
@@ -138,7 +140,7 @@ def print_label(items):
         if counter == 9:
             x += 1
             counter = 0
-            tag_file = str(item.label)
+            tag_file = str(product.label)
             image_rectangle = Rect(27,72,206,251)
             first_page.insertImage(image_rectangle, filename=tag_file)
             output_file = str(file_name + str(x) + '.pdf')

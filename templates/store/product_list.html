@@ -41,7 +41,6 @@
               {% csrf_token %}
                 <div class="table-stats order-table ov-h">
                     <table class="table ">
-
                         <thead>
                             <tr>
                                 <th>Print</th>
@@ -58,7 +57,6 @@
                             <tr>
                                 <td><input type="checkbox" name="product" value="{{ product.sortno }}" /></td>
                                 <td class="serial">{{ forloop.counter }}</td>
-
                                 <td>{{ product.name }}</td>
                                 <td>{{ product.sortno }}</td>
                                 <td>
@@ -69,21 +67,14 @@
                                 <td>{{ product.created_date }}</td>
                             </tr>
                             {% endfor %}
-
-
-
-
                             {% else %}
                                 <tr><td>No Product Data</td></tr>
                             {% endif %}
-
-
                         </tbody>
-
                     </table>
                 </div> <!-- /.table-stats -->
                 <tr></tr>
-                <button id="variant-button" type="submit" class="btn btn-lg btn-info btn-block">
+                <button id="submit-button" type="submit" class="btn btn-lg btn-info btn-block">
                     <span id="payment-button-amount">Print Labels</span>
                 </button>
               </form>
