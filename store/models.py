@@ -43,6 +43,7 @@ class Drop(models.Model):
 
 class Product(models.Model):
     office = models.ForeignKey(Office, on_delete=models.CASCADE, null=True)
+    drop = models.ForeignKey(Drop, on_delete=models.CASCADE, null=True)
     sport = models.CharField(max_length=120, unique=False, default=None)
     name = models.CharField(max_length=120, unique=False, default=None)
     link = models.CharField(max_length=120, unique=False, default=None)
