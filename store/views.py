@@ -50,7 +50,7 @@ def create_supplier(request):
             retype_password = forms.cleaned_data['retype_password']
             if password == retype_password:
                 user = User.objects.create_user(
-                    username=name, password=password,
+                    username=email, password=password,
                     email=email, is_supplier=True
                 )
                 Supplier.objects.create(user=user, name=name, address=address)
@@ -77,12 +77,11 @@ def create_buyer(request):
             name = forms.cleaned_data['name']
             address = forms.cleaned_data['address']
             email = forms.cleaned_data['email']
-            username = forms.cleaned_data['username']
             password = forms.cleaned_data['password']
             retype_password = forms.cleaned_data['retype_password']
             if password == retype_password:
                 user = User.objects.create_user(
-                    username=username, password=password,
+                    username=email, password=password,
                     email=email, is_buyer=True
                 )
                 Buyer.objects.create(user=user, name=name, address=address)

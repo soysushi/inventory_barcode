@@ -16,7 +16,8 @@ from django.core.files.base import ContentFile
 
 from .models import Product
 
-
+# 2000000000000 is the barcode
+# 100000000000 is the drop code
 def generate_label(barcode, product, names, link):
     # create a png file
 # file that has all the item variants
