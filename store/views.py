@@ -1,5 +1,8 @@
 # adding uuid to allow users to have same username and name
 import uuid
+import json
+
+from django.http import JsonResponse
 
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
@@ -249,6 +252,14 @@ def create_order(request):
     }
     return render(request, 'store/create_order.html', context)
 
+def search_products(request):
+    if request.method=='POST':
+        search_str=json.loads(request.body).get('searchText')
+
+        products=Product.objects.filter(sortno=search_str, status='available')
+
+        data = products.values()
+        return JsonResponse(list(data), safe=False)
 
 class OrderListView(ListView):
     model = Order

@@ -61,8 +61,26 @@ jQuery(document).ready(function($) {
 			$this.addClass('form-control')
 			// add variant value(s)
 			})
+	// Search Field
+	const searchField = document.querySelector("#searchField");
 
+	searchField.addEventListener("keyup", (e) => {
+		const searchValue = e.target.value;
 
+		if(searchValue.trim().length>0){
+
+			console.log('searchValue', searchValue)
+
+			fetch("search-products", {
+				body: JSON.stringify({ searchText: searchValue }),
+				method: "POST",
+			})
+				.then((res) => res.json())
+				.then((data) => {
+					console.log("data", data);
+				})
+		}
+	});
 	// Menu Trigger
 	$('#menuToggle').on('click', function(event) {
 		var windowWidth = $(window).width();

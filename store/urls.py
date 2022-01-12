@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.decorators.csrf import csrf_exempt
 
 from .views import (
     create_supplier,
@@ -16,6 +17,7 @@ from .views import (
     #ProductListView,
     OrderListView,
     DeliveryListView,
+    search_products,
 )
 
 urlpatterns = [
@@ -34,4 +36,5 @@ urlpatterns = [
     path('product-list/', product_list, name='product-list'),
     path('order-list/', OrderListView.as_view(), name='order-list'),
     path('delivery-list/', DeliveryListView.as_view(), name='delivery-list'),
+    path('create-order/search-products', csrf_exempt(search_products), name='search-products'),
 ]

@@ -156,25 +156,7 @@ class ProductForm(forms.ModelForm):
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = [
-            'supplier', 'product', 'buyer', 'office',
-        ]
-
-        widgets = {
-            'supplier': forms.Select(attrs={
-                'class': 'form-control', 'id': 'supplier'
-            }),
-            'product': forms.Select(attrs={
-                'class': 'form-control', 'id': 'product'
-            }),
-            'buyer': forms.Select(attrs={
-                'class': 'form-control', 'id': 'buyer'
-            }),
-            'office': forms.Select(attrs={
-                'class': 'form-control', 'id': 'office'
-            }),
-        }
-
+        fields = "__all__"
 
 class DeliveryForm(forms.ModelForm):
     class Meta:
