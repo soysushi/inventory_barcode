@@ -65,6 +65,21 @@
                                 {% endfor %}
                                 </td>
                                 <td>{{ product.created_date }}</td>
+                                <td>
+                                    {% if product.status == 'shipping' %}
+                                        <a class="btn btn-warning" href="">{{ product.status }}</a>
+                                    {% elif product.status == 'out for delivery' %}
+                                        <a class="btn btn-danger" href="">{{ product.status }}</a>
+                                    {% elif product.status == 'available' %}
+                                        <a class="btn btn-success" href="">{{ product.status }}</a>
+                                    {% elif product.status == 'delivered' %}
+                                        <a class="btn btn-primary" href="">{{ product.status }}</a>
+                                    {% elif product.status == 'returning' %}
+                                        <a class="btn btn-secondary" href="">{{ product.status }}</a>
+                                    {% else %}
+                                        <a class="btn btn-info" href="">{{ order.status }}</a>
+                                    {% endif %}
+                                </td>
                             </tr>
                             {% endfor %}
                             {% else %}

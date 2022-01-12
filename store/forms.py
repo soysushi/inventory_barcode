@@ -87,7 +87,7 @@ class OfficeForm(forms.ModelForm):
 class DropForm(forms.ModelForm):
     class Meta:
         model = Drop
-        fields = ['name']
+        fields = ['name', 'sortno']
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': 'form-control', 'id': 'name'

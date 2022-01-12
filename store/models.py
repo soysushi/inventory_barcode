@@ -35,19 +35,29 @@ class Office(models.Model):
 
 class Drop(models.Model):
     name = models.CharField(max_length=120, unique=True)
+    sortno = models.PositiveIntegerField()
     created_date = models.DateField(auto_now_add=True)
+    label = models.ImageField(upload_to='static/images/dropcodes', blank=True, default=None)
 
     def __str__(self):
         return self.name
 
 
 class Product(models.Model):
+    STATUS_CHOICE = (
+        ('available', 'Available'),
+        ('shipping', 'Shipping'),
+        ('out for delivery', 'Out for Delivery'),
+        ('delivered', 'Delivered'),
+        ('returning', 'Returning'),
+    )
     office = models.ForeignKey(Office, on_delete=models.CASCADE, null=True)
     drop = models.ForeignKey(Drop, on_delete=models.CASCADE, null=True)
     sport = models.CharField(max_length=120, unique=False, default=None)
     name = models.CharField(max_length=120, unique=False, default=None)
     link = models.CharField(max_length=120, unique=False, default=None)
     sortno = models.PositiveIntegerField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICE, default='available')
     created_date = models.DateField(auto_now_add=True)
     label = models.ImageField(upload_to='static/images/barcodes', blank=True, default=None)
 
@@ -74,9 +84,6 @@ class ProductNumber(models.Model):
 
     def __str__(self):
         return self.name
-
-
-
 
 class Order(models.Model):
     STATUS_CHOICE = (
