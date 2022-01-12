@@ -163,16 +163,22 @@ def generate_dropcode(dropcode, drop):
     # here turning PILLOW IMG file into BytesIO
     #image_io = BytesIO()
     #image.save(image_io, format='PNG')
-    image_name = str(barcode)+'.png'
+    image_name = str(dropcode)+'.png'
     # preparing barcode to paste to template
     img_main = Image.open('static/images/Cycling_Template.png')
     position = (int((img_main.width - image.width)/2),
     (img_main.height - image.height))
     back_im = img_main.copy()
     back_im.paste(image, position)
+    # Drawing text
+    font = ImageFont.truetype(font='static/assets/fonts/Zachery.otf', size=140)
+    draw = ImageDraw.Draw(im=back_im)
+    text = drop.name
+    draw.text(xy=(310,305), text=text, font=font, fill='#000000')
     # back_im.save(file, quality=100)
     back_im_io = BytesIO()
     back_im.save(back_im_io, format='PNG')
-    back_im_name = str(barcode)+'.png'
+    back_im_name = str(dropcode)+'.png'
+    # Save
     drop.label.save(back_im_name, content=ContentFile(back_im_io.getvalue()), save=False)
     drop.save()

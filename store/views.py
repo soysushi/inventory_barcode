@@ -33,6 +33,7 @@ from .forms import (
 from .helpers import (
     generate_label,
     print_label,
+    generate_dropcode,
 )
 
 # Supplier views
@@ -133,6 +134,9 @@ def create_drop(request):
             dropcode.number += 10
             dropcode.save()
             forms.save()
+            drop_temp = request.POST['name']
+            drop = Drop.objects.get(name=drop_temp)
+            generate_dropcode(dropcode.number, drop)
             return redirect('drop-list')
     context = {
         'form': forms
