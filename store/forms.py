@@ -157,7 +157,7 @@ class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = [
-            'supplier', 'product', 'design', 'color', 'buyer', 'office', 'drop'
+            'supplier', 'product', 'buyer', 'office',
         ]
 
         widgets = {
@@ -167,20 +167,11 @@ class OrderForm(forms.ModelForm):
             'product': forms.Select(attrs={
                 'class': 'form-control', 'id': 'product'
             }),
-            'design': forms.TextInput(attrs={
-                'class': 'form-control', 'id': 'design'
-            }),
-            'color': forms.TextInput(attrs={
-                'class': 'form-control', 'id': 'color'
-            }),
             'buyer': forms.Select(attrs={
                 'class': 'form-control', 'id': 'buyer'
             }),
             'office': forms.Select(attrs={
                 'class': 'form-control', 'id': 'office'
-            }),
-            'drop': forms.Select(attrs={
-                'class': 'form-control', 'id': 'drop'
             }),
         }
 

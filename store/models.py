@@ -95,12 +95,9 @@ class Order(models.Model):
         ('bulk', 'Bulk'),
     )
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    design = models.CharField(max_length=50)
-    color = models.CharField(max_length=50)
+    product = models.ManyToManyField(Product, blank=True)
     buyer = models.ForeignKey(Buyer, on_delete=models.CASCADE, null=True)
     office = models.ForeignKey(Office, on_delete=models.CASCADE, null=True)
-    drop = models.ForeignKey(Drop, on_delete=models.CASCADE, null=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICE)
     created_date = models.DateField(auto_now_add=True)
 
