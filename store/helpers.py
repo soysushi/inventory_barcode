@@ -150,8 +150,8 @@ def print_label(items):
     return
 
 def generate_dropcode(dropcode, drop):
-    # create a png file
-# file that has all the item variants
+    # create a png file using the new dropcode
+    print(dropcode)
     original_image = EAN13(str(dropcode), writer=ImageWriter())
     i = original_image.render()
     fixed_height = 150
@@ -160,6 +160,7 @@ def generate_dropcode(dropcode, drop):
     width_size = int((float(i.size[0]) * float(height_percent)))
     image = i.resize((width_size * 2, fixed_height),
             PIL.Image.NEAREST)
+    image.show()
     # here turning PILLOW IMG file into BytesIO
     #image_io = BytesIO()
     #image.save(image_io, format='PNG')

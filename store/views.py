@@ -124,20 +124,22 @@ class OfficeListView(ListView):
 @login_required(login_url='login')
 def create_drop(request):
     forms = DropForm()
-    barcode = ProductNumber.objects.get(name="dropcode")
-    sortno = int(str(EAN13(str(barcode.number))))
-    forms.fields['sortno'].initial = sortno
     if request.method == 'POST':
         forms = DropForm(request.POST)
         if forms.is_valid():
-            dropcode = ProductNumber.objects.get(name="dropcode")
-            dropcode.number += 10
-            dropcode.save()
             forms.save()
+            dropcode = ProductNumber.objects.get(name="dropcode")
             drop_temp = request.POST['name']
             drop = Drop.objects.get(name=drop_temp)
             generate_dropcode(dropcode.number, drop)
+            dropcode.number += 10
+            dropcode.save()
             return redirect('drop-list')
+
+    dropcode = ProductNumber.objects.get(name="dropcode")
+    sortno = int(str(EAN13(str(dropcode.number))))
+    forms.fields['sortno'].initial = sortno
+
     context = {
         'form': forms
     }
