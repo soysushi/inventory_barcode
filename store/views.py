@@ -231,19 +231,13 @@ def create_order(request):
         if forms.is_valid():
             supplier = forms.cleaned_data['supplier']
             product = forms.cleaned_data['product']
-            design = forms.cleaned_data['design']
-            color = forms.cleaned_data['color']
             buyer = forms.cleaned_data['buyer']
             office = forms.cleaned_data['office']
-            drop = forms.cleaned_data['drop']
             Order.objects.create(
                 supplier=supplier,
                 product=product,
-                design=design,
-                color=color,
                 buyer=buyer,
                 office=office,
-                drop=drop,
                 status='pending'
             )
             return redirect('order-list')
