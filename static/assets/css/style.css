@@ -1455,7 +1455,7 @@ header .form-inline {
     .table-stats table th img,
     .table-stats table td img {
       margin-right: 10px;
-      max-width: 45px; }
+      max-width: 200px; }
     .table-stats table th .name,
     .table-stats table td .name {
       color: #343a40;

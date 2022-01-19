@@ -61,7 +61,7 @@
                                 <td>{{ product.sortno }}</td>
                                 <td>
                                 {%for variant in product.productvariant_set.all %}
-                                {{ variant }}
+                                {{ variant }}, 
                                 {% endfor %}
                                 </td>
                                 <td>{{ product.created_date }}</td>

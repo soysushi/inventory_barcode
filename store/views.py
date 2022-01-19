@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from barcode import EAN13
+from itertools import chain
 
 from users.models import User
 from .models import (
@@ -231,19 +232,13 @@ def create_order(request):
         if forms.is_valid():
             supplier = forms.cleaned_data['supplier']
             product = forms.cleaned_data['product']
-            design = forms.cleaned_data['design']
-            color = forms.cleaned_data['color']
             buyer = forms.cleaned_data['buyer']
             office = forms.cleaned_data['office']
-            drop = forms.cleaned_data['drop']
             Order.objects.create(
                 supplier=supplier,
                 product=product,
-                design=design,
-                color=color,
                 buyer=buyer,
                 office=office,
-                drop=drop,
                 status='pending'
             )
             return redirect('order-list')
@@ -254,12 +249,23 @@ def create_order(request):
 
 def search_products(request):
     if request.method=='POST':
+        variants = []
         search_str=json.loads(request.body).get('searchText')
 
         products=Product.objects.filter(sortno=search_str, status='available')
+        for product in products:
+             variants = product.productvariant_set.all()
 
-        data = products.values()
-        return JsonResponse(list(data), safe=False)
+        data = list(chain(products.values(), variants.values()))
+        res = {}
+        for values in data:
+
+                res.update({key: values[key] for key in values.keys()
+                                   & {'sortno', 'name', 'label'}})
+
+
+        print(res)
+        return JsonResponse(res, safe=False)
 
 class OrderListView(ListView):
     model = Order
