@@ -181,7 +181,7 @@ def create_product(request):
                 )
             # get the current barcode
             barcode = ProductNumber.objects.get(name="barcode")
-            product.sortno = barcode.number
+            # product.sortno = barcode.number
             link = request.POST['link']
             generate_label(barcode.number, product, names, link)
             barcode.number += 10
@@ -193,8 +193,12 @@ def create_product(request):
             return redirect('product-list')
     # get the current barcodes
     barcode = ProductNumber.objects.get(name="barcode")
+    print("WTF IS GOING ON")
+    print(barcode.number)
     sortno = int(str(EAN13(str(barcode.number))))
     forms.fields['sortno'].initial = sortno
+    print("HELLOOOOO")
+    print(sortno)
 
 
     context = {
