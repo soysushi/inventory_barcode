@@ -266,7 +266,7 @@ def search_products(request):
         for values in data:
 
                 res.update({key: values[key] for key in values.keys()
-                                   & {'sortno', 'name', 'label'}})
+                                   & {'id', 'sortno', 'name', 'label'}})
 
 
         print(res)

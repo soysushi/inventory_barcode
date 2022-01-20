@@ -95,6 +95,9 @@ jQuery(document).ready(function($) {
 							<a href="../../${data.label}"<td><img src="../../${data.label}" width="300px"></img></td></a>
 							</tr>`;
 
+							$('#id_product option[value="'+data.id+'"]').prop('selected', true);
+
+
 					};
 				});
 		}
