@@ -63,11 +63,15 @@ jQuery(document).ready(function($) {
 			})
 	// Search Field
 	const searchField = document.querySelector("#searchField");
-
+	const tableOutput = document.querySelector(".table-output");
+	const appTable = document.querySelector(".app-table");
+	tableOutput.style.display = "block";
 	searchField.addEventListener("keyup", (e) => {
 		const searchValue = e.target.value;
-
+		tableOutput.innerHTML="";
 		if(searchValue.trim().length>0){
+
+
 
 			console.log('searchValue', searchValue)
 
@@ -78,7 +82,25 @@ jQuery(document).ready(function($) {
 				.then((res) => res.json())
 				.then((data) => {
 					console.log("data", data);
-				})
+					if (data.length===0){
+						tableOutput.innerHTML+=`
+						<tr>
+						<td>TEST</td>
+						</tr>`;
+					}
+					else {
+
+							tableOutput.innerHTML+=`
+							<tr>
+							<a href="../../${data.label}"<td><img src="../../${data.label}" width="300px"></img></td></a>
+							</tr>`;
+
+					};
+				});
+		}
+		else{
+			tableOutput.style.display = "none";
+			appTable.style.display = "block";
 		}
 	});
 	// Menu Trigger

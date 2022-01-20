@@ -102,7 +102,9 @@ class Order(models.Model):
     created_date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return self.product.name
+        print(self.buyer.name)
+        print("SUP HOMIES")
+        return self.status
 
 
 class Delivery(models.Model):

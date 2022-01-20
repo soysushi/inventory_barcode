@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from barcode import EAN13
+from itertools import chain
 
 from users.models import User
 from .models import (
@@ -180,7 +181,7 @@ def create_product(request):
                 )
             # get the current barcode
             barcode = ProductNumber.objects.get(name="barcode")
-            product.sortno = barcode.number
+            # product.sortno = barcode.number
             link = request.POST['link']
             generate_label(barcode.number, product, names, link)
             barcode.number += 10
@@ -229,18 +230,23 @@ def create_order(request):
     if request.method == 'POST':
         forms = OrderForm(request.POST)
         if forms.is_valid():
+            print("HELLO FORM IS VALID")
             supplier = forms.cleaned_data['supplier']
             product = forms.cleaned_data['product']
             buyer = forms.cleaned_data['buyer']
             office = forms.cleaned_data['office']
-            Order.objects.create(
+            instance = Order.objects.create(
                 supplier=supplier,
-                product=product,
                 buyer=buyer,
                 office=office,
                 status='pending'
             )
+            for items in product:
+                instance.product.add(items)
+
             return redirect('order-list')
+
+    forms.fields['status'].initial = "pending"
     context = {
         'form': forms
     }
@@ -248,12 +254,23 @@ def create_order(request):
 
 def search_products(request):
     if request.method=='POST':
+        variants = []
         search_str=json.loads(request.body).get('searchText')
 
         products=Product.objects.filter(sortno=search_str, status='available')
+        for product in products:
+             variants = product.productvariant_set.all()
 
-        data = products.values()
-        return JsonResponse(list(data), safe=False)
+        data = list(chain(products.values(), variants.values()))
+        res = {}
+        for values in data:
+
+                res.update({key: values[key] for key in values.keys()
+                                   & {'sortno', 'name', 'label'}})
+
+
+        print(res)
+        return JsonResponse(res, safe=False)
 
 class OrderListView(ListView):
     model = Order
