@@ -193,12 +193,8 @@ def create_product(request):
             return redirect('product-list')
     # get the current barcodes
     barcode = ProductNumber.objects.get(name="barcode")
-    print("WTF IS GOING ON")
-    print(barcode.number)
     sortno = int(str(EAN13(str(barcode.number))))
     forms.fields['sortno'].initial = sortno
-    print("HELLOOOOO")
-    print(sortno)
 
 
     context = {
@@ -234,18 +230,23 @@ def create_order(request):
     if request.method == 'POST':
         forms = OrderForm(request.POST)
         if forms.is_valid():
+            print("HELLO FORM IS VALID")
             supplier = forms.cleaned_data['supplier']
             product = forms.cleaned_data['product']
             buyer = forms.cleaned_data['buyer']
             office = forms.cleaned_data['office']
-            Order.objects.create(
+            instance = Order.objects.create(
                 supplier=supplier,
-                product=product,
                 buyer=buyer,
                 office=office,
                 status='pending'
             )
+            for items in product:
+                instance.product.add(items)
+
             return redirect('order-list')
+
+    forms.fields['status'].initial = "pending"
     context = {
         'form': forms
     }
