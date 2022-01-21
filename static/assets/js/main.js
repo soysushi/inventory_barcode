@@ -61,11 +61,40 @@ jQuery(document).ready(function($) {
 			$this.addClass('form-control')
 			// add variant value(s)
 			})
+		function onScanSuccess(decodedText, decodedResult) {
+		    console.log(`Code scanned = ${decodedText}`, decodedResult);
+				const searchField = document.querySelector("#searchField");
+				searchField.value = decodedText
+		}
+		var html5QrcodeScanner = new Html5QrcodeScanner(
+			"qr-reader", { fps: 10, qrbox: 250 });
+		html5QrcodeScanner.render(onScanSuccess);
+
+// 		$('#camera').on('click', function() {
+// 			javascriptBarcodeReader({
+//   /* Image ID || HTML5 Image || HTML5 Canvas || HTML5 Canvas ImageData || Image URL */
+//   image: source,
+//   barcode: 'code-2of5',
+//   // barcodeType: 'industrial',
+//   options: {
+//     // useAdaptiveThreshold: true // for images with sahded portions
+//     // singlePass: true
+//   }
+// })
+//   .then(code => {
+//     console.log(code)
+//   })
+//   .catch(err => {
+//     console.log(err)
+//   })
+// 			})
 	// Search Field
 	const searchField = document.querySelector("#searchField");
 	const tableOutput = document.querySelector(".table-output");
 	const appTable = document.querySelector(".app-table");
+
 	tableOutput.style.display = "block";
+
 	searchField.addEventListener("keyup", (e) => {
 		const searchValue = e.target.value;
 		tableOutput.innerHTML="";

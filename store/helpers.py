@@ -17,6 +17,9 @@ from django.core.files.base import ContentFile
 
 from .models import Product
 
+import cv2
+from pyzbar import pyzbar
+
 # 2000000000000 is the barcode
 # 100000000000 is the drop code
 def generate_label(barcode, product, names, link):
@@ -188,3 +191,19 @@ def generate_dropcode(dropcode, drop):
     # Save
     drop.label.save(back_im_name, content=ContentFile(back_im_io.getvalue()), save=False)
     drop.save()
+
+def read_barcodes(frame):
+    barcodes = pyzbar.decode(frame)
+    for barcode in barcodes:
+        x, y , w, h = barcode.rect
+        #1
+        barcode_info = barcode.data.decode('utf-8')
+        cv2.rectangle(frame, (x, y),(x+w, y+h), (0, 255, 0), 2)
+
+        #2
+        font = cv2.FONT_HERSHEY_DUPLEX
+        cv2.putText(frame, barcode_info, (x + 6, y - 6), font, 2.0, (255, 255, 255), 1)
+        #3
+        with open("barcode_result.txt", mode ='w') as file:
+            file.write("Recognized Barcode:" + barcode_info)
+    return frame

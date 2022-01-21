@@ -246,7 +246,6 @@ def create_order(request):
 
             return redirect('order-list')
 
-    forms.fields['status'].initial = "pending"
     context = {
         'form': forms
     }
