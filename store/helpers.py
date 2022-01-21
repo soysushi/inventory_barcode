@@ -7,6 +7,7 @@ import os
 import PIL
 import glob
 import qrcode
+import os
 
 import fitz
 import json
@@ -136,6 +137,8 @@ def print_label(items):
             first_page.insertImage(image_rectangle, filename=tag_file)
             output_file = str(file_name + str(x) + '.pdf')
             file_handle.saveIncr()
+            os.system("open " + output_file)
+
 
         # third image location 3
         if counter == 9:
@@ -146,6 +149,7 @@ def print_label(items):
             first_page.insertImage(image_rectangle, filename=tag_file)
             output_file = str(file_name + str(x) + '.pdf')
             file_handle.save(output_file)
+            os.system("open " + output_file)
 
         counter += 1
     return
