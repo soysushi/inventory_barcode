@@ -17,7 +17,7 @@ from .models import (
     Supplier,
     Buyer,
     Office,
-    Drop,
+    Section,
     Product,
     Order,
     Delivery,
@@ -28,7 +28,7 @@ from .forms import (
     SupplierForm,
     BuyerForm,
     OfficeForm,
-    DropForm,
+    SectionForm,
     ProductForm,
     OrderForm,
     DeliveryForm,
@@ -123,17 +123,17 @@ class OfficeListView(ListView):
     context_object_name = 'office'
 
 
-# Drop views
+# Section views
 @login_required(login_url='login')
 def create_drop(request):
-    forms = DropForm()
+    forms = SectionForm()
     if request.method == 'POST':
-        forms = DropForm(request.POST)
+        forms = SectionForm(request.POST)
         if forms.is_valid():
             forms.save()
             dropcode = ProductNumber.objects.get(name="dropcode")
             drop_temp = request.POST['name']
-            drop = Drop.objects.get(name=drop_temp)
+            drop = Section.objects.get(name=drop_temp)
             generate_dropcode(dropcode.number, drop)
             dropcode.number += 10
             dropcode.save()
@@ -149,8 +149,8 @@ def create_drop(request):
     return render(request, 'store/create_drop.html', context)
 
 
-class DropListView(ListView):
-    model = Drop
+class SectionListView(ListView):
+    model = Section
     template_name = 'store/drop_list.html'
     context_object_name = 'drop'
 

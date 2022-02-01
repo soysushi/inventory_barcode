@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Office, Drop, Product, Order, Delivery, ProductVariant
+from .models import Office, Section, Product, Order, Delivery, ProductVariant
 
 
 class SupplierForm(forms.Form):
@@ -84,9 +84,9 @@ class OfficeForm(forms.ModelForm):
         }
 
 
-class DropForm(forms.ModelForm):
+class SectionForm(forms.ModelForm):
     class Meta:
-        model = Drop
+        model = Section
         fields = ['name', 'sortno']
         widgets = {
             'name': forms.TextInput(attrs={

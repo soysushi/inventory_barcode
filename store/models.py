@@ -33,7 +33,7 @@ class Office(models.Model):
         return self.name
 
 
-class Drop(models.Model):
+class Section(models.Model):
     name = models.CharField(max_length=120, unique=True)
     sortno = models.PositiveIntegerField()
     created_date = models.DateField(auto_now_add=True)
@@ -52,7 +52,7 @@ class Product(models.Model):
         ('returning', 'Returning'),
     )
     office = models.ForeignKey(Office, on_delete=models.CASCADE, null=True)
-    drop = models.ForeignKey(Drop, on_delete=models.CASCADE, null=True)
+    drop = models.ForeignKey(Section, on_delete=models.CASCADE, null=True)
     sport = models.CharField(max_length=120, unique=False, default=None)
     name = models.CharField(max_length=120, unique=False, default=None)
     link = models.CharField(max_length=120, unique=False, default=None)
