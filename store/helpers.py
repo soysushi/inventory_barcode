@@ -81,7 +81,7 @@ def generate_label(barcode, product, names, link):
     qr.add_data(link)
     qr.make(fit=True)
     s_font = ImageFont.truetype(font='static/assets/fonts/Zachery.otf', size=32)
-    draw.text(xy=(40,523), text="scan QR code for more info!", font=s_font, fill='#000000')
+    draw.text(xy=(528,314), text="info", font=s_font, fill='#000000')
     qr_test = qr.make_image(fill_color="black", back_color="white")
     back_im.paste(qr_test,(488, 349))
     back_im_io = BytesIO()
