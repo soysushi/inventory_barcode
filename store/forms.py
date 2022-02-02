@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Office, Section, Product, Order, Delivery, ProductVariant
+from .models import Location, Section, Product, Order, Delivery, ProductVariant
 
 
 class SupplierForm(forms.Form):
@@ -36,7 +36,7 @@ class SupplierForm(forms.Form):
     }))
 
 
-class BuyerForm(forms.Form):
+class RecipientForm(forms.Form):
     name = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control',
         'id': 'name',
@@ -69,9 +69,9 @@ class BuyerForm(forms.Form):
     }))
 
 
-class OfficeForm(forms.ModelForm):
+class LocationForm(forms.ModelForm):
     class Meta:
-        model = Office
+        model = Location
         fields = ['name', 'description']
 
         widgets = {

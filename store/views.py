@@ -15,8 +15,8 @@ from itertools import chain
 from users.models import User
 from .models import (
     Supplier,
-    Buyer,
-    Office,
+    Recipient,
+    Location,
     Section,
     Product,
     Order,
@@ -26,8 +26,8 @@ from .models import (
 )
 from .forms import (
     SupplierForm,
-    BuyerForm,
-    OfficeForm,
+    RecipientForm,
+    LocationForm,
     SectionForm,
     ProductForm,
     OrderForm,
@@ -71,12 +71,12 @@ class SupplierListView(ListView):
     context_object_name = 'supplier'
 
 
-# Buyer views
+# Recipient views
 @login_required(login_url='login')
 def create_buyer(request):
-    forms = BuyerForm()
+    forms = RecipientForm()
     if request.method == 'POST':
-        forms = BuyerForm(request.POST)
+        forms = RecipientForm(request.POST)
         if forms.is_valid():
             name = forms.cleaned_data['name']
             address = forms.cleaned_data['address']
@@ -88,7 +88,7 @@ def create_buyer(request):
                     username=email, password=password,
                     email=email, is_buyer=True
                 )
-                Buyer.objects.create(user=user, name=name, address=address)
+                Recipient.objects.create(user=user, name=name, address=address)
                 return redirect('buyer-list')
     context = {
         'form': forms
@@ -96,8 +96,8 @@ def create_buyer(request):
     return render(request, 'store/create_buyer.html', context)
 
 
-class BuyerListView(ListView):
-    model = Buyer
+class RecipientListView(ListView):
+    model = Recipient
     template_name = 'store/buyer_list.html'
     context_object_name = 'buyer'
 
@@ -105,9 +105,9 @@ class BuyerListView(ListView):
 # Office views
 @login_required(login_url='login')
 def create_office(request):
-    forms = OfficeForm()
+    forms = LocationForm()
     if request.method == 'POST':
-        forms = OfficeForm(request.POST)
+        forms = LocationForm(request.POST)
         if forms.is_valid():
             forms.save()
             return redirect('office-list')
@@ -117,8 +117,8 @@ def create_office(request):
     return render(request, 'store/create_office.html', context)
 
 
-class OfficeListView(ListView):
-    model = Office
+class LocationListView(ListView):
+    model = Location
     template_name = 'store/office_list.html'
     context_object_name = 'office'
 

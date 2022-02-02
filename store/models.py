@@ -14,7 +14,7 @@ class Supplier(models.Model):
         return self.name
 
 
-class Buyer(models.Model):
+class Recipient(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=120, unique=False)
     address = models.CharField(max_length=220)
@@ -24,7 +24,7 @@ class Buyer(models.Model):
         return self.name
 
 
-class Office(models.Model):
+class Location(models.Model):
     name = models.CharField(max_length=120, unique=True)
     description = models.CharField(max_length=220)
     created_date = models.DateField(auto_now_add=True)
@@ -51,7 +51,7 @@ class Product(models.Model):
         ('delivered', 'Delivered'),
         ('returning', 'Returning'),
     )
-    office = models.ForeignKey(Office, on_delete=models.CASCADE, null=True)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True)
     drop = models.ForeignKey(Section, on_delete=models.CASCADE, null=True)
     sport = models.CharField(max_length=120, unique=False, default=None)
     name = models.CharField(max_length=120, unique=False, default=None)
@@ -95,8 +95,8 @@ class Order(models.Model):
         ('bulk', 'Bulk'),
     )
     product = models.ManyToManyField(Product, blank=True)
-    buyer = models.ForeignKey(Buyer, on_delete=models.CASCADE, null=True)
-    office = models.ForeignKey(Office, on_delete=models.CASCADE, null=True)
+    buyer = models.ForeignKey(Recipient, on_delete=models.CASCADE, null=True)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICE)
     created_date = models.DateField(auto_now_add=True)
 

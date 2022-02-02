@@ -2,8 +2,8 @@ from django.contrib import admin
 
 from .models import (
     Supplier,
-    Buyer,
-    Office,
+    Recipient,
+    Location,
     Section,
     Product,
     Order,
@@ -18,13 +18,13 @@ class SupplierAdmin(admin.ModelAdmin):
     list_display = ['user', 'name', 'address', 'created_date']
 
 
-class BuyerAdmin(admin.ModelAdmin):
+class RecipientAdmin(admin.ModelAdmin):
     list_display = ['user', 'name', 'address', 'created_date']
 
 
 admin.site.register(Supplier, SupplierAdmin)
-admin.site.register(Buyer, BuyerAdmin)
-admin.site.register(Office)
+admin.site.register(Recipient, RecipientAdmin)
+admin.site.register(Location)
 admin.site.register(Section)
 admin.site.register(Product)
 admin.site.register(Order)
