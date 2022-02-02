@@ -94,7 +94,6 @@ class Order(models.Model):
         ('complete', 'Complete'),
         ('bulk', 'Bulk'),
     )
-    supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     product = models.ManyToManyField(Product, blank=True)
     buyer = models.ForeignKey(Buyer, on_delete=models.CASCADE, null=True)
     office = models.ForeignKey(Office, on_delete=models.CASCADE, null=True)
@@ -103,7 +102,6 @@ class Order(models.Model):
 
     def __str__(self):
         print(self.buyer.name)
-        print("SUP HOMIES")
         return self.status
 
 
