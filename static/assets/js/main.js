@@ -123,8 +123,7 @@ jQuery(document).ready(function($) {
 							<tr>
 							<a href="../../${data.label}"<td><img src="../../${data.label}" width="300px"></img></td></a>
 							</tr>`;
-
-							$('#id_product option[value="'+data.id+'"]').prop('selected', true);
+							$('#id_product option[value="'+data.sortno+'"]').prop('selected', true);
 
 
 					};

@@ -156,7 +156,13 @@ class ProductForm(forms.ModelForm):
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = "__all__"
+        fields = ['product', 'buyer', 'status']
+
+    def __init__(self, *args, **kwargs):
+        super(OrderForm, self).__init__(*args, **kwargs)
+        holder = Product.objects.all()
+        products = [(i.sortno, i.name) for i in holder]
+        self.fields['product'].choices = products
 
 class DeliveryForm(forms.ModelForm):
     class Meta:

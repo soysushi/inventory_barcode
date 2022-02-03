@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db.models import Q
 
 from barcode import EAN13
 from itertools import chain
@@ -231,14 +232,10 @@ def create_order(request):
         forms = OrderForm(request.POST)
         if forms.is_valid():
             print("HELLO FORM IS VALID")
-            supplier = forms.cleaned_data['supplier']
             product = forms.cleaned_data['product']
             buyer = forms.cleaned_data['buyer']
-            office = forms.cleaned_data['office']
             instance = Order.objects.create(
-                supplier=supplier,
                 buyer=buyer,
-                office=office,
                 status='pending'
             )
             for items in product:
@@ -254,16 +251,16 @@ def create_order(request):
 def search_products(request):
     if request.method=='POST':
         variants = []
-        search_str=json.loads(request.body).get('searchText')
-
-        products=Product.objects.filter(sortno=search_str, status='available')
-        for product in products:
-             variants = product.productvariant_set.all()
-
-        data = list(chain(products.values(), variants.values()))
+        search_str_temp=json.loads(request.body).get('searchText')
+        search_str = search_str_temp.split(", ")
+        print([search_str[1:]])
+        products=Product.objects.filter(variant__variant__in=search_str[1:]) & Product.objects.filter(name__contains=search_str[0])
+        print(products)
+        # for product in products:
+            # variants = product.productvariant_set.all()
+        data = products.values()
         res = {}
         for values in data:
-
                 res.update({key: values[key] for key in values.keys()
                                    & {'id', 'sortno', 'name', 'label'}})
 

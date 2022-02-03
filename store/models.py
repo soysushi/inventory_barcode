@@ -65,7 +65,7 @@ class Product(models.Model):
         return self.name
 
 class ProductVariant(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name="variant", on_delete=models.CASCADE)
     variant = models.CharField(max_length=120, unique=False)
 
     def __str__(self):
@@ -96,7 +96,6 @@ class Order(models.Model):
     )
     product = models.ManyToManyField(Product, blank=True)
     buyer = models.ForeignKey(Recipient, on_delete=models.CASCADE, null=True)
-    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICE)
     created_date = models.DateField(auto_now_add=True)
 
