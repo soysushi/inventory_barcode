@@ -253,9 +253,7 @@ def search_products(request):
         variants = []
         search_str_temp=json.loads(request.body).get('searchText')
         search_str = search_str_temp.split(", ")
-        print([search_str[2:]])
         products=Product.objects.filter(variant__variant__in=search_str[2:]) & Product.objects.filter(name__contains=search_str[1]) & Product.objects.filter(location__name__contains=search_str[0])
-        print(products)
         # for product in products:
             # variants = product.productvariant_set.all()
         data = products.values()
