@@ -1,5 +1,5 @@
 # inventory-management
-This is a inventory management system
+This is a inventory management system that is no longer being used. Able to convert user inputs into a unique label, barcode and qr code
 
 # How to Setup
 1. Clone Project
